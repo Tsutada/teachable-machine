@@ -83,25 +83,32 @@ async function predict() {
 function checkPtn() {
     if(state === Goukakyu){
         alert("火遁業火球の術!");
+        reset();
     }else if(state === Housenka){
         alert("火遁鳳仙火の術!");
+        reset();
     }else if(state === Kuchiyose){
         alert("口寄せの術!");
+        reset();
     }else if(state === Bunshin){
         alert("分身の術!");
+        reset();
     }
 }
 
 undo.addEventListener("click",() =>{
-    console.log("Hello!");
     previousInput = state.slice((state.length-2),(state.length-1));
     state = state.slice(0,-1);
-    scoreContainer.innerHTML = scoreContainer.innerHTML.slice(0,-2);
+    if(!state) scoreContainer.innerHTML = scoreContainer.innerHTML.slice(0,-2);
 });
 
 reset.addEventListener("click",() =>{
+    reset();
+});
+
+function reset() {
     previousInput = "";
     state = "";
-    scoreContainer.innerHTML="";
+    scoreContainer.innerHTML="現在の入力 : ";
     start=false;
-});
+}
