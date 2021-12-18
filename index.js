@@ -93,6 +93,7 @@ function checkPtn() {
 }
 
 undo.addEventListener("click",() =>{
+    console.log("Hello!");
     previousInput = state.slice((state.length-2),(state.length-1));
     state = state.slice(0,-1);
     scoreContainer.innerHTML = scoreContainer.innerHTML.slice(0,-2);
