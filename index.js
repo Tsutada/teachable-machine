@@ -75,6 +75,7 @@ async function predict() {
         if((previousInput !== currentInput) && (currentInput !== "初期状態")){
             state+=currentInput;
             scoreContainer.innerHTML+=currentInput + " ";
+            console.log(currentInput + " , " + previousInput);
         }
         checkPtn();
     }
@@ -90,5 +91,4 @@ function checkPtn() {
     }else if(state === Bunshin){
         alert("分身の術!");
     }
-    console.log("Hello!")
 }
