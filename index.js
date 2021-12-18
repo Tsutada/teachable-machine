@@ -17,7 +17,6 @@ const Bunshin = "未巳寅";
 let model, webcam, labelContainer, maxPredictions;
 let state,previousInput,currentInput,start;
 state="";
-previousInput="";
 start=false;
 
 // Load the image model and setup the webcam
@@ -67,6 +66,7 @@ async function predict() {
             currentInput = prediction[i].className;
         }
     }
+    console.log(currentInput);
     if(currentInput === "初期状態"){
         start=true;
         previousInput=currentInput;
