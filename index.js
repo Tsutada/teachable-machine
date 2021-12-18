@@ -3,8 +3,22 @@
 
 // the link to your model provided by Teachable Machine export panel
 const URL = "./my_model/";
+const input = document.querySelector("#input");
+const undo = document.querySelector("#undo");
+const reset = document.querySelector("#reset");
+const scoreContainer = document.querySelector("#score-container");
+input.style.display = "none";
+
+const Goukakyu = "巳未申亥午寅";
+const Housenka = "子寅戌丑卯寅";
+const Kuchiyose = "亥戌酉申未";
+const Bunshin = "未巳寅";
 
 let model, webcam, labelContainer, maxPredictions;
+let state,previousInput,currentInput,start;
+state="";
+previousInput="";
+start=false;
 
 // Load the image model and setup the webcam
 async function init() {
@@ -31,6 +45,7 @@ async function init() {
     for (let i = 0; i < maxPredictions; i++) { // and class labels
         labelContainer.appendChild(document.createElement("div"));
     }
+    input.style.display = "block";
 }
 
 async function loop() {
@@ -47,5 +62,32 @@ async function predict() {
         const classPrediction =
             prediction[i].className + ": " + prediction[i].probability.toFixed(2);
         labelContainer.childNodes[i].innerHTML = classPrediction;
+        if(prediction[i].probability > 0.9){
+            if(start) previousInput=currentInput;
+            currentInput = prediction[i].className;
+        }
+    }
+    if(currentInput === "初期状態"){
+        start=true;
+        previousInput=currentInput;
+    }
+    if(start){
+        if((previousInput !== currentInput) && (currentInput !== "初期状態")){
+            state+=currentInput;
+            scoreContainer.innerHTML+=currentInput + " ";
+        }
+        checkPtn();
+    }
+}
+
+function checkPtn() {
+    if(state === Goukakyu){
+        alert("火遁業火球の術!");
+    }else if(state === Housenka){
+        alert("火遁鳳仙火の術!");
+    }else if(state === Kuchiyose){
+        alert("口寄せの術!");
+    }else if(state === Bunshin){
+        alert("分身の術!");
     }
 }
