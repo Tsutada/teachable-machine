@@ -90,4 +90,5 @@ function checkPtn() {
     }else if(state === Bunshin){
         alert("分身の術!");
     }
+    console.log("Hello!")
 }
