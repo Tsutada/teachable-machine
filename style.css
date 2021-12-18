@@ -1,0 +1,26 @@
+.top {
+    text-align: center;
+    color: burlywood;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.wrapper {
+    background-image: url("./img/list.jpg");
+    background-size: 100% auto;
+    width: 80%;
+    height: 100%;
+    min-height: 100%;
+    margin: 0 auto;
+}
+
+button {
+    margin: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+}

@@ -61,12 +61,11 @@ async function predict() {
         const classPrediction =
             prediction[i].className + ": " + prediction[i].probability.toFixed(2);
         if((prediction[i].className !== "初期状態") && (prediction[i].className !== "default")) labelContainer.childNodes[i].innerHTML = classPrediction;
-        if(prediction[i].probability > 0.9){
+        if(prediction[i].probability > 0.95){
             if(start) previousInput=currentInput;
             currentInput = prediction[i].className;
         }
     }
-    console.log(currentInput);
     if(currentInput === "初期状態"){
         start=true;
         previousInput=currentInput;
@@ -74,6 +73,7 @@ async function predict() {
     if(start){
         if((previousInput !== currentInput) && (currentInput !== "初期状態") && (currentInput !== "default")){
             state+=currentInput;
+            console.log(state);
             scoreContainer.innerHTML+=currentInput + " ";
         }
         checkPtn();
