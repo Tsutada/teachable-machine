@@ -60,7 +60,7 @@ async function predict() {
     for (let i = 0; i < maxPredictions; i++) {
         const classPrediction =
             prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelContainer.childNodes[i].innerHTML = classPrediction;
+        if((prediction[i].className !== "初期状態") && (prediction[i].className !== "default")) labelContainer.childNodes[i].innerHTML = classPrediction;
         if(prediction[i].probability > 0.9){
             if(start) previousInput=currentInput;
             currentInput = prediction[i].className;
@@ -72,10 +72,9 @@ async function predict() {
         previousInput=currentInput;
     }
     if(start){
-        if((previousInput !== currentInput) && (currentInput !== "初期状態")){
+        if((previousInput !== currentInput) && (currentInput !== "初期状態") && (currentInput !== "default")){
             state+=currentInput;
             scoreContainer.innerHTML+=currentInput + " ";
-            console.log(currentInput + " , " + previousInput);
         }
         checkPtn();
     }
@@ -92,3 +91,16 @@ function checkPtn() {
         alert("分身の術!");
     }
 }
+
+undo.addEventListener("click",() =>{
+    previousInput = state.slice((state.length-2),(state.length-1));
+    state = state.slice(0,-1);
+    scoreContainer.innerHTML = scoreContainer.innerHTML.slice(0,-2);
+});
+
+reset.addEventListener("click",() =>{
+    previousInput = "";
+    state = "";
+    scoreContainer.innerHTML="";
+    start=false;
+});
