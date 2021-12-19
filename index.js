@@ -50,7 +50,7 @@ async function init() {
 async function loop() {
     webcam.update(); // update the webcam frame
     await predict();
-    window.requestAnimationFrame(loop);
+    window.requestAnimationFrame(loop)
 }
 
 // run the webcam image through the image model
@@ -58,22 +58,22 @@ async function predict() {
     // predict can take in an image, video or canvas html element
     const prediction = await model.predict(webcam.canvas);
     for (let i = 0; i < maxPredictions; i++) {
-        const classPrediction =
-            prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        if((prediction[i].className !== "初期状態") && (prediction[i].className !== "default")) labelContainer.childNodes[i].innerHTML = classPrediction;
-        if(prediction[i].probability > 0.95){
-            if(start) previousInput=currentInput;
+        // const classPrediction =
+        //     prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+        // if((prediction[i].className !== "初期状態") && (prediction[i].className !== "default")) labelContainer.childNodes[i].innerHTML = classPrediction;
+        if(prediction[i].probability > 0.999){
             currentInput = prediction[i].className;
         }
     }
-    if(currentInput === "初期状態"){
+    if(!start && (currentInput === "初期状態")){
         start=true;
+        document.getElementById("sign").style.display = "none";
         previousInput=currentInput;
     }
     if(start){
         if((previousInput !== currentInput) && (currentInput !== "初期状態") && (currentInput !== "default")){
+            previousInput = currentInput;
             state+=currentInput;
-            console.log(state);
             scoreContainer.innerHTML+=currentInput + " ";
         }
         checkPtn();
@@ -82,24 +82,29 @@ async function predict() {
 
 function checkPtn() {
     if(state === Goukakyu){
-        alert("火遁業火球の術!");
+        let audio = new Audio("./audio/Goukakyu.wav");
+        audio.play();
         res();
     }else if(state === Housenka){
-        alert("火遁鳳仙火の術!");
+        let audio = new Audio("./audio/Housenka.wav");
+        audio.play();
         res();
     }else if(state === Kuchiyose){
-        alert("口寄せの術!");
+        let audio = new Audio("./audio/Kuchiyose.wav");
+        audio.play();
         res();
     }else if(state === Bunshin){
-        alert("分身の術!");
+        let audio = new Audio("./audio/Bunshin.wav");
+        audio.play();
         res();
     }
 }
 
 undo.addEventListener("click",() =>{
     previousInput = state.slice((state.length-2),(state.length-1));
+    currentInput = previousInput;
+    if(!(state === "")) scoreContainer.innerHTML = scoreContainer.innerHTML.slice(0,-2);
     state = state.slice(0,-1);
-    if(!state) scoreContainer.innerHTML = scoreContainer.innerHTML.slice(0,-2);
 });
 
 reset.addEventListener("click",() =>{
@@ -107,6 +112,7 @@ reset.addEventListener("click",() =>{
 });
 
 function res() {
+    document.getElementById("sign").style.display = "block";
     previousInput = "";
     state = "";
     scoreContainer.innerHTML="現在の入力 : ";

@@ -3,24 +3,56 @@
     color: burlywood;
     font-weight: bold;
     font-size: 40px;
+    padding: 5px 0;
+}
+
+* {
+    padding: 0;
+    margin: 0;
 }
 
 html,
 body {
-    height: 100%;
+    height: calc(100% - 50px);
+}
+
+.left, .right {
+    display: inline-block;
 }
 
 .wrapper {
+    display: flex;
+    justify-content: space-between;
     background-image: url("./img/list.jpg");
     background-size: 100% auto;
     width: 80%;
-    height: 100%;
+    height: calc( 100% - 50px );
     min-height: 100%;
     margin: 0 auto;
 }
 
-button {
+.start-btn {
     margin: 20px;
     padding: 10px 20px;
     font-size: 20px;
+}
+
+.input {
+    margin: 20px;
+    line-height: 25px;
+    color: yellow;
+}
+
+.right {
+    margin-top: 30px;
+    margin-right: 30px;
+}
+
+.right ul {
+    padding: 20px 20px;
+    color: rgb(82, 221, 82);
+    font-size: 35px;
+    font-weight: bold;
+    list-style: none;
+    outline: solid 2px goldenrod;
 }
